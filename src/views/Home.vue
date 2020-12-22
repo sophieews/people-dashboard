@@ -6,7 +6,7 @@
         <v-container>
             <v-row>
                 <v-col cols="12" sm="6">
-                    <PeopleTable></PeopleTable>
+                    <Table></Table>
                 </v-col>
                 <v-col cols="12" sm="6">
                     <Charts></Charts>
@@ -17,13 +17,13 @@
 </template>
 
 <script>
-import PeopleTable from '@/components/PeopleTable.vue';
+import Table from '@/components/Table.vue';
 import Charts from '@/components/Charts.vue';
 
 export default {
     name: 'Home',
     components: {
-        PeopleTable,
+        Table,
         Charts
     }
 };

@@ -39,7 +39,5 @@ export default new Vuex.Store({
             }
             return dataArray;
         }
-    },
-    actions: {},
-    modules: {}
+    }
 });
