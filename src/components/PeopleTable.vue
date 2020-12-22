@@ -6,21 +6,43 @@
             @click:close="$router.replace({ query: {} })"
             >{{ $route.query.prop }}: {{ $route.query.val }}</v-chip
         >
-        <v-data-table :headers="headers" :items="filteredPeople"></v-data-table>
+        <v-data-table :headers="headers" :items="filteredPeople">
+            <template v-slot:item.actions="{ item }">
+                <v-icon
+                    small
+                    class="mr-2"
+                    @click="
+                        editDialog = true;
+                        editItem = item;
+                    "
+                >
+                    mdi-pencil
+                </v-icon>
+                <v-icon small @click="deleteItem(item)">
+                    mdi-delete
+                </v-icon>
+            </template>
+        </v-data-table>
+        <EditDialog v-model="editDialog" :item="editItem"></EditDialog>
     </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
+import EditDialog from '@/components/EditDialog';
 export default {
     name: 'PeopleTable',
+    components: { EditDialog },
     data() {
         return {
             headers: [
                 { text: 'Name', value: 'name' },
                 { text: 'Age', value: 'age' },
-                { text: 'Gender', value: 'gender' }
-            ]
+                { text: 'Gender', value: 'gender' },
+                { text: 'Edit', value: 'actions' }
+            ],
+            editDialog: false,
+            editItem: {}
         };
     },
     computed: {

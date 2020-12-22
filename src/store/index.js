@@ -10,6 +10,12 @@ export default new Vuex.Store({
     mutations: {
         SET_PEOPLE(state, people) {
             state.people = people;
+        },
+        UPDATE_PERSON(state, updatedPerson) {
+            let index = state.people.findIndex(
+                person => person._id == updatedPerson._id
+            );
+            Vue.set(state.people, index, updatedPerson);
         }
     },
     getters: {
