@@ -1,6 +1,11 @@
 <template>
     <div id="charts">
         <v-select
+            v-model="selectedChartType"
+            :items="chartTypes"
+            label="Chart type"
+        ></v-select>
+        <v-select
             v-model="selectedType"
             :items="types"
             label="Person attribute"
@@ -17,6 +22,8 @@ export default {
     name: 'Charts',
     data() {
         return {
+            selectedChartType: 'Bar',
+            chartTypes: ['Bar', 'Pie'],
             selectedType: 'Age',
             types: ['Age', 'Gender', 'Eye Color']
         };
@@ -45,22 +52,92 @@ export default {
     },
     watch: {
         selectedType() {
-            this.updatePie();
+            this.updateChart();
+        },
+        selectedChartType() {
+            this.updateChart();
         }
     },
     methods: {
         /**
          * Remove all d3 group elements and redraw the pie chart
          */
-        updatePie() {
+        updateChart() {
             d3.selectAll('g').remove();
-            this.generatePie();
+            if (this.selectedChartType == 'Bar') {
+                this.generateBar();
+            } else {
+                this.generatePie();
+            }
+        },
+        /**
+         * Create new bar chart with computed data
+         * Code based on https://www.tutorialsteacher.com/d3js bar chart tutorial
+         */
+        generateBar() {
+            // Select svg element, and set width and height with 200px margin
+            const svg = d3.select('svg'),
+                margin = 200,
+                width = svg.attr('width') - margin,
+                height = svg.attr('height') - margin;
+
+            // Define x and y scales for each axis
+            const xScale = d3
+                    .scaleBand()
+                    .range([0, width])
+                    .padding(0.4),
+                yScale = d3.scaleLinear().range([height, 0]);
+
+            // Create a new d3 group element
+            const g = svg
+                .append('g')
+                .attr('transform', 'translate(' + 100 + ',' + 100 + ')');
+
+            // Map discrete person property values to the x axis (e.g. eye color, age..)
+            xScale.domain(
+                this.data.map(function(d) {
+                    return d.property;
+                })
+            );
+            // Create y domain from 0 to the max value of 'value' of the computed data
+            yScale.domain([
+                0,
+                d3.max(this.data, function(d) {
+                    return d.value;
+                })
+            ]);
+
+            // Draw x axis
+            g.append('g')
+                .attr('transform', 'translate(0,' + height + ')')
+                .call(d3.axisBottom(xScale));
+
+            // Draw y axis based on yScale domain and show 10 values (ticks)
+            g.append('g').call(d3.axisLeft(yScale).ticks(10));
+
+            // Draw rectangles for each bar
+            g.selectAll('.bar')
+                .data(this.data)
+                .enter()
+                .append('rect')
+                .attr('class', 'bar')
+                .attr('x', function(d) {
+                    return xScale(d.property);
+                })
+                .attr('y', function(d) {
+                    return yScale(d.value);
+                })
+                .attr('width', xScale.bandwidth())
+                .attr('height', function(d) {
+                    return height - yScale(d.value);
+                });
         },
         /**
          * Create new pie chart, using computed data
+         * Code based on https://www.tutorialsteacher.com/d3js Pie chart tutorial
          */
         generatePie() {
-            // Find svg tag and set width, height amd radius consts
+            // Select svg element and set width, height amd radius consts
             const svg = d3.select('svg'),
                 width = svg.attr('width'),
                 height = svg.attr('height'),
@@ -136,9 +213,18 @@ export default {
     }
 };
 </script>
+<style scoped></style>
 
 <style>
 .chart .arc {
     cursor: pointer !important;
 }
+.chart .bar {
+    fill: #437ea9;
+    cursor: pointer;
+}
+.chart .bar:hover {
+    fill: #70aad4;
+}
 </style>
+#437ea9
