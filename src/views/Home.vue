@@ -8,6 +8,9 @@
                 <v-col cols="12" sm="6">
                     <PeopleTable></PeopleTable>
                 </v-col>
+                <v-col cols="12" sm="6">
+                    <Charts></Charts>
+                </v-col>
             </v-row>
         </v-container>
     </div>
@@ -15,11 +18,13 @@
 
 <script>
 import PeopleTable from '@/components/PeopleTable.vue';
+import Charts from '@/components/Charts.vue';
 
 export default {
     name: 'Home',
     components: {
-        PeopleTable
+        PeopleTable,
+        Charts
     }
 };
 </script>
