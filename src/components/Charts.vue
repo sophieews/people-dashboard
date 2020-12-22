@@ -22,14 +22,16 @@ export default {
     name: 'Charts',
     data() {
         return {
-            selectedChartType: 'Bar',
+            selectedChartType: 'Pie',
             chartTypes: ['Bar', 'Pie'],
-            selectedType: 'Age',
+            selectedType: 'Eye Color',
             types: ['Age', 'Gender', 'Eye Color']
         };
     },
     mounted() {
-        this.generatePie();
+        this.$nextTick(() => {
+            this.generatePie();
+        });
     },
     computed: {
         ...mapState(['people']),
@@ -146,7 +148,7 @@ export default {
          * Create new pie chart, using computed data
          * Code based on https://www.tutorialsteacher.com/d3js Pie chart tutorial
          */
-        generatePie() {
+        async generatePie() {
             // Select svg element and set width, height amd radius consts
             const svg = d3.select('svg'),
                 width = svg.attr('width'),
@@ -161,31 +163,31 @@ export default {
                     'translate(' + width / 2 + ',' + height / 2 + ')'
                 );
 
-            var color = d3.scaleOrdinal([
+            const color = d3.scaleOrdinal([
                 '#4daf4a',
                 '#377eb8',
                 '#ff7f00',
                 '#984ea3',
                 '#e41a1c'
             ]);
-            var label = d3
+            const label = d3
                 .arc()
                 .outerRadius(radius)
                 .innerRadius(radius - 80);
 
             // Generate the pie
-            var pie = d3.pie().value(function(d) {
+            const pie = d3.pie().value(function(d) {
                 return d.value;
             });
 
             // Generate the arcs
-            var arc = d3
+            const arc = d3
                 .arc()
                 .innerRadius(0)
                 .outerRadius(radius);
 
             // Generate groups
-            var arcs = g
+            const arcs = g
                 .selectAll('arc')
                 .data(pie(this.data))
                 .enter()
