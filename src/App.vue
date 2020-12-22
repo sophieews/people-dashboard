@@ -7,11 +7,13 @@
 </template>
 
 <script>
+import people from '@/utils/people.json';
+
 export default {
     name: 'App',
 
-    data: () => ({
-        //
-    })
+    mounted() {
+        this.$store.commit('SET_PEOPLE', people);
+    }
 };
 </script>
