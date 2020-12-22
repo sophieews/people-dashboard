@@ -130,6 +130,16 @@ export default {
                 .attr('width', xScale.bandwidth())
                 .attr('height', function(d) {
                     return height - yScale(d.value);
+                })
+                .on('click', (d, i) => {
+                    if (this.$route.query.val != i.property) {
+                        this.$router.replace({
+                            query: {
+                                prop: this.selectedType,
+                                val: i.property
+                            }
+                        });
+                    }
                 });
         },
         /**
@@ -199,6 +209,16 @@ export default {
                         .transition()
                         .duration(200)
                         .attr('opacity', 1);
+                })
+                .on('click', (d, i) => {
+                    if (this.$route.query.val != i.data.property) {
+                        this.$router.replace({
+                            query: {
+                                prop: this.selectedType,
+                                val: i.data.property
+                            }
+                        });
+                    }
                 });
 
             // Add arc labels
@@ -225,6 +245,6 @@ export default {
 }
 .chart .bar:hover {
     fill: #70aad4;
+    outline: #70aad4 solid 0.25px;
 }
 </style>
-#437ea9

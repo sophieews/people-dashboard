@@ -1,6 +1,12 @@
 <template>
     <div>
-        <v-data-table :headers="headers" :items="people"></v-data-table>
+        <v-chip
+            v-if="$route.query.prop"
+            close
+            @click:close="$router.replace({ query: {} })"
+            >{{ $route.query.prop }}: {{ $route.query.val }}</v-chip
+        >
+        <v-data-table :headers="headers" :items="filteredPeople"></v-data-table>
     </div>
 </template>
 
@@ -18,7 +24,25 @@ export default {
         };
     },
     computed: {
-        ...mapState(['people'])
+        ...mapState(['people']),
+        filteredPeople() {
+            switch (this.$route.query.prop) {
+                case 'Age':
+                    return this.people.filter(person => {
+                        return person['age'] == this.$route.query.val;
+                    });
+                case 'Gender':
+                    return this.people.filter(person => {
+                        return person['gender'] == this.$route.query.val;
+                    });
+                case 'Eye Color':
+                    return this.people.filter(person => {
+                        return person['eyeColor'] == this.$route.query.val;
+                    });
+                default:
+                    return this.people;
+            }
+        }
     }
 };
 </script>
