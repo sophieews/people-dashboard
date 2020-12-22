@@ -1,11 +1,13 @@
 <template>
     <div>
+        <!-- Filter chip -->
         <v-chip
             v-if="$route.query.prop"
             close
             @click:close="$router.replace({ query: {} })"
             >{{ $route.query.prop }}: {{ $route.query.val }}</v-chip
         >
+        <!-- People Table -->
         <v-data-table :headers="headers" :items="filteredPeople">
             <template v-slot:item.actions="{ item }">
                 <v-icon
@@ -18,9 +20,9 @@
                 >
                     mdi-pencil
                 </v-icon>
-                <v-icon small @click="deleteItem(item)">
+                <!-- <v-icon small @click="deleteItem(item)">
                     mdi-delete
-                </v-icon>
+                </v-icon> -->
             </template>
         </v-data-table>
         <EditDialog v-model="editDialog" :item="editItem"></EditDialog>
@@ -48,21 +50,25 @@ export default {
     computed: {
         ...mapState(['people']),
         filteredPeople() {
-            switch (this.$route.query.prop) {
-                case 'Age':
-                    return this.people.filter(person => {
-                        return person['age'] == this.$route.query.val;
-                    });
-                case 'Gender':
-                    return this.people.filter(person => {
-                        return person['gender'] == this.$route.query.val;
-                    });
-                case 'Eye Color':
-                    return this.people.filter(person => {
-                        return person['eyeColor'] == this.$route.query.val;
-                    });
-                default:
-                    return this.people;
+            if (!this.$route.query.prop || !this.$route.query.val) {
+                return this.people;
+            } else {
+                switch (this.$route.query.prop) {
+                    case 'Age':
+                        return this.people.filter(person => {
+                            return person['age'] == this.$route.query.val;
+                        });
+                    case 'Gender':
+                        return this.people.filter(person => {
+                            return person['gender'] == this.$route.query.val;
+                        });
+                    case 'Eye Color':
+                        return this.people.filter(person => {
+                            return person['eyeColor'] == this.$route.query.val;
+                        });
+                    default:
+                        return this.people;
+                }
             }
         }
     }
