@@ -111,7 +111,7 @@ export default {
     watch: {
         show(val) {
             if (val && this.item) {
-                this.editedItem = Object.assign({}, this.item);
+                this.editedItem = JSON.parse(JSON.stringify(this.item));
             }
         }
     },
