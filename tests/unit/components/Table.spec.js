@@ -3,7 +3,6 @@ import { createLocalVue, mount } from '@vue/test-utils';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { nextTick } from 'vue';
-import flushPromises from 'flush-promises';
 import Table from '@/components/Table';
 import EditDialog from '@/components/EditDialog';
 Vue.use(Vuetify);
