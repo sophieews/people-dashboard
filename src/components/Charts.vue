@@ -6,7 +6,7 @@
             label="Chart type"
         ></v-select>
         <v-select
-            v-model="selectedType"
+            v-model="selectedPropertyType"
             :items="types"
             label="Person attribute"
         ></v-select>
@@ -212,7 +212,7 @@ export default {
                     if (this.$route.query.val != i.data.property) {
                         this.$router.replace({
                             query: {
-                                prop: this.selectedType,
+                                prop: this.selectedPropertyType,
                                 val: i.data.property
                             }
                         });
