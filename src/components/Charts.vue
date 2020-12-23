@@ -23,7 +23,7 @@ export default {
         return {
             selectedChartType: 'Pie',
             chartTypes: ['Bar', 'Pie'],
-            selectedPropertyType: 'Eye Color',
+            selectedPropertyType: 'Age',
             types: ['Age', 'Gender', 'Eye Color']
         };
     },
@@ -52,6 +52,9 @@ export default {
             this.updateChart();
         },
         selectedChartType() {
+            this.updateChart();
+        },
+        people() {
             this.updateChart();
         }
     },

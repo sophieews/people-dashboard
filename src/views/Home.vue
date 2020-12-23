@@ -1,14 +1,14 @@
 <template>
     <div class="home">
-        <div class="text-center">
+        <div class="text-center pt-4">
             <h1>People Dashboard</h1>
         </div>
-        <v-container>
+        <v-container fluid class="px-8">
             <v-row>
-                <v-col cols="12" sm="7">
+                <v-col sm="12" md="7">
                     <Table></Table>
                 </v-col>
-                <v-col cols="12" sm="5">
+                <v-col sm="12" md="5">
                     <Charts></Charts>
                 </v-col>
             </v-row>
