@@ -23,7 +23,7 @@ export default {
         return {
             selectedChartType: 'Pie',
             chartTypes: ['Bar', 'Pie'],
-            selectedType: 'Eye Color',
+            selectedPropertyType: 'Eye Color',
             types: ['Age', 'Gender', 'Eye Color']
         };
     },
@@ -34,8 +34,8 @@ export default {
     },
     computed: {
         ...mapState(['people']),
-        data() {
-            switch (this.selectedType) {
+        chartData() {
+            switch (this.selectedPropertyType) {
                 case 'Age':
                     return this.$store.getters.getChartData('age');
                 case 'Eye Color':
@@ -48,7 +48,7 @@ export default {
         }
     },
     watch: {
-        selectedType() {
+        selectedPropertyType() {
             this.updateChart();
         },
         selectedChartType() {
@@ -92,14 +92,14 @@ export default {
 
             // Map discrete person property values to the x axis (e.g. eye color, age..)
             xScale.domain(
-                this.data.map(function(d) {
+                this.chartData.map(function(d) {
                     return d.property;
                 })
             );
-            // Create y domain from 0 to the max value of 'value' of the computed data
+            // Create y domain from 0 to the max value of 'value' of the computed chartData
             yScale.domain([
                 0,
-                d3.max(this.data, function(d) {
+                d3.max(this.chartData, function(d) {
                     return d.value;
                 })
             ]);
@@ -114,7 +114,7 @@ export default {
 
             // Draw rectangles for each bar
             g.selectAll('.bar')
-                .data(this.data)
+                .data(this.chartData)
                 .enter()
                 .append('rect')
                 .attr('class', 'bar')
@@ -132,7 +132,7 @@ export default {
                     if (this.$route.query.val != i.property) {
                         this.$router.replace({
                             query: {
-                                prop: this.selectedType,
+                                prop: this.selectedPropertyType,
                                 val: i.property
                             }
                         });
@@ -159,11 +159,12 @@ export default {
                 );
 
             const color = d3.scaleOrdinal([
-                '#4daf4a',
-                '#377eb8',
-                '#ff7f00',
-                '#984ea3',
-                '#e41a1c'
+                '#7B4B94',
+                '#E27396',
+                '#EAF2D7',
+                '#EA9AB2',
+                '#B3DEE2',
+                '#EFCFE3'
             ]);
             const label = d3
                 .arc()
@@ -184,7 +185,7 @@ export default {
             // Generate groups
             const arcs = g
                 .selectAll('arc')
-                .data(pie(this.data))
+                .data(pie(this.chartData))
                 .enter()
                 .append('g')
                 .attr('class', 'arc');
@@ -230,7 +231,6 @@ export default {
     }
 };
 </script>
-<style scoped></style>
 
 <style>
 .chart .arc {
