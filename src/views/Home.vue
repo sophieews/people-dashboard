@@ -5,10 +5,10 @@
         </div>
         <v-container>
             <v-row>
-                <v-col cols="12" sm="6">
+                <v-col cols="12" sm="7">
                     <Table></Table>
                 </v-col>
-                <v-col cols="12" sm="6">
+                <v-col cols="12" sm="5">
                     <Charts></Charts>
                 </v-col>
             </v-row>
