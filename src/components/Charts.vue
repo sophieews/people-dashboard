@@ -10,7 +10,6 @@
             :items="types"
             label="Person attribute"
         ></v-select>
-        <div id="arc"></div>
         <svg width="500" height="400" class="chart"></svg>
     </div>
 </template>
@@ -38,15 +37,11 @@ export default {
         data() {
             switch (this.selectedType) {
                 case 'Age':
-                    return this.$store.getters.getPeopleDataByProperty('age');
+                    return this.$store.getters.getChartData('age');
                 case 'Eye Color':
-                    return this.$store.getters.getPeopleDataByProperty(
-                        'eyeColor'
-                    );
+                    return this.$store.getters.getChartData('eyeColor');
                 case 'Gender':
-                    return this.$store.getters.getPeopleDataByProperty(
-                        'gender'
-                    );
+                    return this.$store.getters.getChartData('gender');
                 default:
                     return [];
             }
