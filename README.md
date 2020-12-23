@@ -19,17 +19,18 @@ npm run build
 ```
 
 ### Run your tests
-
+- Run all
 ```
 npm run test
 ```
-
-### Run your tests with code coverage report
-
+- Run tests that match "file name"
 ```
-npm run test
+npm run test <file name>
 ```
-
+- Run tests with a code coverage report
+```
+npm run test-coverage
+```
 ### Lints and fixes files
 
 ```
