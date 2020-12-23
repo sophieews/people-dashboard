@@ -20,9 +20,6 @@
                 >
                     mdi-pencil
                 </v-icon>
-                <!-- <v-icon small @click="deleteItem(item)">
-                    mdi-delete
-                </v-icon> -->
             </template>
         </v-data-table>
         <EditDialog v-model="editDialog" :item="editItem"></EditDialog>
@@ -41,6 +38,9 @@ export default {
                 { text: 'Name', value: 'name' },
                 { text: 'Age', value: 'age' },
                 { text: 'Gender', value: 'gender' },
+                { text: 'Eye Color', value: 'eyeColor' },
+                { text: 'Pet', value: 'preferences.pet' },
+                { text: 'Fruit', value: 'preferences.fruit' },
                 { text: 'Edit', value: 'actions' }
             ],
             editDialog: false,
