@@ -24,16 +24,16 @@ npm run build
 npm run test
 ```
 
+### Run your tests with code coverage report
+
+```
+npm run test
+```
+
 ### Lints and fixes files
 
 ```
 npm run lint
-```
-
-### Run your unit tests
-
-```
-npm run test:unit
 ```
 
 ### Customize configuration
